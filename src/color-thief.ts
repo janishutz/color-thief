@@ -34,12 +34,21 @@ class CanvasImage {
 
     height: number;
 
-    constructor ( image: HTMLImageElement ) {
-        this.canvas = document.createElement( 'canvas' );
-        this.context = this.canvas.getContext( '2d' );
-        this.width = this.canvas.width = image.naturalWidth;
-        this.height = this.canvas.height = image.naturalHeight;
-        this.context.drawImage( image, 0, 0, this.width, this.height );
+    constructor ( image?: HTMLImageElement, canvas?: HTMLCanvasElement ) {
+        if ( image ) {
+            this.canvas = document.createElement( 'canvas' );
+            this.context = this.canvas.getContext( '2d' );
+            this.width = this.canvas.width = image.naturalWidth;
+            this.height = this.canvas.height = image.naturalHeight;
+            this.context.drawImage( image, 0, 0, this.width, this.height );
+        } else if ( canvas ) {
+            this.canvas = canvas;
+            this.context = this.canvas.getContext( '2d' );
+            this.width = this.canvas.width;
+            this.height = this.canvas.height;
+        } else {
+            throw new Error("One of the two constructor arguments needed");
+        }
     }
 
     getImageData = function () {
