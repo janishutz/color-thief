@@ -34,15 +34,15 @@ class CanvasImage {
 
     height: number;
 
-    constructor ( image?: HTMLImageElement, canvas?: HTMLCanvasElement ) {
-        if ( image ) {
+    constructor ( image: HTMLImageElement | HTMLCanvasElement ) {
+        if ( image instanceof HTMLImageElement ) {
             this.canvas = document.createElement( 'canvas' );
             this.context = this.canvas.getContext( '2d' );
             this.width = this.canvas.width = image.naturalWidth;
             this.height = this.canvas.height = image.naturalHeight;
             this.context.drawImage( image, 0, 0, this.width, this.height );
-        } else if ( canvas ) {
-            this.canvas = canvas;
+        } else if ( image instanceof HTMLCanvasElement ) {
+            this.canvas = image;
             this.context = this.canvas.getContext( '2d' );
             this.width = this.canvas.width;
             this.height = this.canvas.height;
@@ -70,14 +70,14 @@ class ColorThief {
     /**
      * Use the median cut algorithm provided by quantize.js to cluster similar
      * colors and return the base color from the largest cluster.
-     * @param {HTMLImageElement} sourceImage:HTMLImageElement
+     * @param {HTMLImageElement | HTMLCanvasElement} sourceImage The source image or canvas element
      * @param {number?} quality (Optional) 1 = highest quality, 10 = default. The bigger the number, the
      * faster a color will be returned but the greater the likelihood that it will not be the visually
      * most dominant color.
      * @returns {ColorThiefResult} returns {r: num, g: num, b: num}
      */
     getColor (
-        sourceImage: HTMLImageElement,
+        sourceImage: HTMLImageElement | HTMLCanvasElement,
         quality: number = 10,
     ): ColorThiefResult {
         const palette = this.getPalette( sourceImage, 5, quality );
@@ -86,7 +86,7 @@ class ColorThief {
 
     /**
      * Use the median cut algorithm provided by quantize.js to cluster similar colors.
-     * @param {HTMLImageElement} sourceImage The image you want to have processed, as an HTMLImageElement
+     * @param {HTMLImageElement | HTMLCanvasElement} sourceImage The image you want to have processed, as an HTMLImageElement or HTMLCanvasElement
      * @param {number?} colorCount colorCount determines the size of the palette; the number of colors returned. If not set, it
      * defaults to 10.
      * @param {number?} quality (Optional) 1 = highest quality, 10 = default. The bigger the number, the
@@ -95,7 +95,7 @@ class ColorThief {
      * @returns {ColorThiefResult[] | null} returns array[ {r: num, g: num, b: num}, {r: num, g: num, b: num}, ...]
      */
     getPalette (
-        sourceImage: HTMLImageElement,
+        sourceImage: HTMLImageElement | HTMLCanvasElement,
         colorCount?: number,
         quality: number = 10,
     ): ColorThiefResult[] | null {
@@ -202,7 +202,7 @@ class ColorThief {
      * @returns {void}
      * @deprecated since Version 3.0, in favour of getColorPromise. Only retained for compatibility
      */
-    getColorAsync = ( imageUrl: string, callback: ( data: ColorThiefResult, img: HTMLImageElement ) => void, quality: number | null ): void => {
+    getColorAsync ( imageUrl: string, callback: ( data: ColorThiefResult, img: HTMLImageElement ) => void, quality: number | null ): void {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const thief = this;
         this.getImageDataFromURL( imageUrl ).then( ( imageData ) => {
@@ -216,14 +216,14 @@ class ColorThief {
     };
 
     /**
-     * Same as getColor, but promise-based
+     * Get the dominant color of an image from an image URL promise-based. Replaces getColorFromUrl
      * @param {string} imageUrl
      * @param {number?} quality (Optional) 1 = highest quality, 10 = default. The bigger the number, the
      * faster a color will be returned but the greater the likelihood that it will not be the visually
      * most dominant color.
      * @returns {Promise<{ 'color': ColorThiefResult, 'img': HTMLImageElement }>} Returns a promise resolving to an object containing the color and the image element
      */
-    getColorPromise = ( imageUrl: string, quality: number | null ): Promise<{ 'color': ColorThiefResult, 'img': HTMLImageElement }> => {
+    getColorFromURLPromise ( imageUrl: string, quality: number | null ): Promise<{ 'color': ColorThiefResult, 'img': HTMLImageElement }> {
         return new Promise( ( resolve, reject ) => {
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             const thief = this;
