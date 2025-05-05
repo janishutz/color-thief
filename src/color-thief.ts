@@ -152,9 +152,9 @@ class ColorThief {
      * @deprecated since Version 3.0, use getImageDataFromURL instead
      */
     getImageData ( imageUrl: string, callback: ( data: string ) => void ): void {
-        fetch( imageUrl ).then( ( res ) => {
+        fetch( imageUrl ).then( res => {
             if ( res.status === 200 ) {
-                res.arrayBuffer().then( ( response ) => {
+                res.arrayBuffer().then( response => {
                     const uInt8Array = new Uint8Array( response );
                     const binaryString = new Array( uInt8Array.length );
                     for ( let i = 0; i < uInt8Array.length; i++ ) {
@@ -174,9 +174,9 @@ class ColorThief {
      */
     getImageDataFromURL ( imageUrl: string ): Promise<string> {
         return new Promise( ( resolve, reject ) => {
-            fetch( imageUrl ).then( ( res ) => {
+            fetch( imageUrl ).then( res => {
                 if ( res.status === 200 ) {
-                    res.arrayBuffer().then( ( response ) => {
+                    res.arrayBuffer().then( response => {
                         const uInt8Array = new Uint8Array( response );
                         const binaryString = new Array( uInt8Array.length );
                         for ( let i = 0; i < uInt8Array.length; i++ ) {
@@ -205,11 +205,11 @@ class ColorThief {
     getColorAsync ( imageUrl: string, callback: ( data: ColorThiefResult, img: HTMLImageElement ) => void, quality: number | null ): void {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const thief = this;
-        this.getImageDataFromURL( imageUrl ).then( ( imageData ) => {
+        this.getImageDataFromURL( imageUrl ).then( imageData => {
             const sourceImage = document.createElement( 'img' );
             sourceImage.addEventListener( 'load', () => {
                 const palette = thief.getPalette( sourceImage, 5, quality );
-                callback( palette[ 0 ], sourceImage );
+                callback( palette[0], sourceImage );
             } );
             sourceImage.src = imageData;
         } );
@@ -227,14 +227,14 @@ class ColorThief {
         return new Promise( ( resolve, reject ) => {
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             const thief = this;
-            this.getImageDataFromURL( imageUrl ).then( ( imageData ) => {
+            this.getImageDataFromURL( imageUrl ).then( imageData => {
                 const sourceImage = document.createElement( 'img' );
                 sourceImage.addEventListener( 'load', () => {
                     const palette = thief.getPalette( sourceImage, 5, quality );
-                    resolve( { 'color': palette[ 0 ], 'img': sourceImage } );
+                    resolve( { 'color': palette[0], 'img': sourceImage } );
                 } );
                 sourceImage.src = imageData;
-            } ).catch( ( e ) => {
+            } ).catch( e => {
                 reject( e );
             } );
         } );

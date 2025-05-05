@@ -41,10 +41,10 @@ const createPixelArray = ( pixels: number[], pixelCount: number, quality: number
 
     for ( let i = 0; i < pixelCount; i = i + quality ) {
         const offset = i * 4;
-        const r = pixels[ offset + 0 ];
-        const g = pixels[ offset + 1 ];
-        const b = pixels[ offset + 2 ];
-        const a = pixels[ offset + 3 ];
+        const r = pixels[offset + 0];
+        const g = pixels[offset + 1];
+        const b = pixels[offset + 2];
+        const a = pixels[offset + 3];
 
         // If pixel is mostly opaque and not white
         if ( typeof a === 'undefined' || a >= 125 ) {
@@ -99,8 +99,8 @@ const loadImg = ( img: string ): Promise<ndarray.NdArray<Uint8Array>> => {
     return new Promise( ( resolve, reject ) => {
         sharp( img )
             .toBuffer()
-            .then( ( buffer ) => sharp( buffer ).metadata()
-                .then( ( metadata ) => ( { buffer, 'format': metadata.format } ) ) )
+            .then( buffer => sharp( buffer ).metadata()
+                .then( metadata => ( { buffer, 'format': metadata.format } ) ) )
             .then( ( { buffer, format } ) => getPixels( buffer, format ) )
             .then( resolve )
             .catch( reject );
@@ -118,10 +118,10 @@ const loadImg = ( img: string ): Promise<ndarray.NdArray<Uint8Array>> => {
 const getColor = ( img: string, quality: number = 10 ): Promise<ColorThiefResult> => {
     return new Promise( ( resolve, reject ) => {
         getPalette( img, 5, quality )
-            .then( ( palette ) => {
+            .then( palette => {
                 resolve( palette[0] );
             } )
-            .catch( ( err ) => {
+            .catch( err => {
                 reject( err );
             } );
     } );
@@ -144,7 +144,7 @@ const getPalette = ( img: string, colorCount: number = 10, quality: number = 10 
 
     return new Promise( ( resolve, reject ) => {
         loadImg( img )
-            .then( ( imgData ) => {
+            .then( imgData => {
                 const pixelCount = imgData.shape[0] * imgData.shape[1];
                 const pixelArray = createPixelArray(
                     Array.from( imgData.data ),
@@ -157,7 +157,7 @@ const getPalette = ( img: string, colorCount: number = 10, quality: number = 10 
 
                 resolve( palette );
             } )
-            .catch( ( err ) => {
+            .catch( err => {
                 reject( err );
             } );
     } );

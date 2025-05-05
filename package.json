@@ -43,19 +43,20 @@
         "lint": "eslint ./src/*"
     },
     "devDependencies": {
-        "@eslint/js": "^9.5.0",
-        "@stylistic/eslint-plugin": "^2.3.0",
+        "@eslint/js": "^9.26.0",
+        "@stylistic/eslint-plugin": "^2.13.0",
         "@types/eslint__js": "^8.42.3",
         "chai": "^5.1.1",
         "chai-as-promised": "^8.0.0",
         "cypress": "^13.12.0",
         "eslint": "^8.57.0",
+        "eslint-plugin-vue": "^10.1.0",
         "http-server": "^14.1.1",
         "microbundle": "^0.15.1",
         "mocha": "^10.5.2",
         "mustache": "^4.2.0",
         "typescript": "^5.5.2",
-        "typescript-eslint": "^7.14.1"
+        "typescript-eslint": "^7.18.0"
     },
     "dependencies": {
         "@lokesh.dhakar/quantize": "^1.3.0",

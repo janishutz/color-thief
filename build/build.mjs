@@ -22,7 +22,7 @@ const workingDir = path.resolve( path.dirname( '' ) );
 const umdPath = path.join( workingDir, umdRelPath );
 const legacyPath = path.join( workingDir, legacyRelPath );
 
-copyFile( umdPath, legacyPath, ( err ) => {
+copyFile( umdPath, legacyPath, err => {
     if ( err ) throw err;
     console.log( `${ umdRelPath } copied to ${ legacyRelPath }.` );
 } );
@@ -32,19 +32,19 @@ const distNodeRelPath = 'dist/color-thief-node.js';
 const srcNodePath = path.join( workingDir, srcNodeRelPath );
 const distNodePath = path.join( workingDir, distNodeRelPath );
 
-copyFile( srcNodePath, distNodePath, ( err ) => {
+copyFile( srcNodePath, distNodePath, err => {
     if ( err ) throw err;
     console.log( `${ srcNodeRelPath } copied to ${ distNodeRelPath }.` );
 } );
 
 
 // Copy the .d.ts files to dist as well
-copyFile( path.join( workingDir, 'built/color-thief-node.d.ts' ), path.join( workingDir, 'dist/color-thief-node.d.ts' ), ( err ) => {
+copyFile( path.join( workingDir, 'built/color-thief-node.d.ts' ), path.join( workingDir, 'dist/color-thief-node.d.ts' ), err => {
     if ( err ) throw err;
     console.log( 'Definitions copied (node)' );
 } );
 
-copyFile( path.join( workingDir, 'built/color-thief.d.ts' ), path.join( workingDir, 'dist/color-thief.d.ts' ), ( err ) => {
+copyFile( path.join( workingDir, 'built/color-thief.d.ts' ), path.join( workingDir, 'dist/color-thief.d.ts' ), err => {
     if ( err ) throw err;
     console.log( 'Definitions copied (node)' );
 } );
