@@ -47,7 +47,7 @@ class CanvasImage {
             this.width = this.canvas.width;
             this.height = this.canvas.height;
         } else {
-            throw new Error("One of the two constructor arguments needed");
+            throw new Error( 'One of the two constructor arguments needed' );
         }
     }
 
@@ -213,7 +213,7 @@ class ColorThief {
             } );
             sourceImage.src = imageData;
         } );
-    };
+    }
 
     /**
      * Get the dominant color of an image from an image URL promise-based. Replaces getColorFromUrl
@@ -238,7 +238,7 @@ class ColorThief {
                 reject( e );
             } );
         } );
-    };
+    }
 }
 
 export default ColorThief;
